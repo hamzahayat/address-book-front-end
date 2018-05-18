@@ -1,0 +1,43 @@
+{
+  "name": "address-book-app-front-end",
+  "version": "1.0.0",
+  "description": "Front-end for address book application",
+  "main": "index.js",
+  "author": "Hamza Qaisrani",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-boost": "^0.1.6",
+    "apollo-cache-inmemory": "^1.1.9",
+    "apollo-client": "^2.2.5",
+    "apollo-link": "^1.2.2",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
+    "graphql": "^0.13.0",
+    "graphql-tag": "^2.7.3",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.10",
+    "material-ui": "^0.20.1",
+    "mobx": "^3.5.1",
+    "mobx-react": "^4.4.2",
+    "react": "^16.2.0",
+    "react-apollo": "^2.0.4",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.4.0",
+    "gulp": "^3.9.1"
+  }
+}
