@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import decode from 'jwt-decode';
 
-// import Register from '../components/Register';
+import Register from './Register';
 import Home from './Home';
 import Login from './Login';
 import './index.css';
@@ -32,7 +32,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/',
           }}
         />
       )
@@ -44,6 +44,7 @@ export default () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={Login} />
+      <Route path="/register" exact component={Register} />
       <PrivateRoute path="/contacts" component={Home} />
     </Switch>
   </BrowserRouter>

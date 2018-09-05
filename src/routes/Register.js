@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import { RaisedButton } from 'material-ui';
 
 // Import gql Query
-import { loginMutation } from '../graphql/User';
+import { registerMutation } from '../graphql/User';
 
 // Declare Style
 const style = {
@@ -21,7 +21,7 @@ const style = {
   },
 };
 
-class Login extends React.Component {
+class Register extends React.Component {
   // Declare Constructor
   constructor(props) {
     super(props);
@@ -29,6 +29,8 @@ class Login extends React.Component {
     // Initialize State
     extendObservable(this, {
       email: '',
+      firstName: '',
+      lastName: '',
       password: '',
       errors: {},
     });
@@ -37,41 +39,31 @@ class Login extends React.Component {
   // Function for when form is submitted
   onSubmit = async () => {
     // Declare Variables
-    const { email, password } = this;
+    const { firstName, lastName, email, password } = this;
 
     // Make request and retrieve response
     const response = await this.props.mutate({
-      variables: { email, password },
+      variables: { firstName, lastName, email, password },
     });
 
     // Declare Response Variables
-    const { ok, token, refreshToken, errors, userName } = response.data.login;
+    const { ok, errors } = response.data.registerUser;
 
     // Set Token if Successful login
     if (ok) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('refreshToken', refreshToken);
       this.props.history.push({
-        pathname: '/contacts',
-        state: {
-          userName,
-        },
+        pathname: '/',
       });
     } else {
       const err = {};
       errors.forEach(({ path, message }) => {
+        console.log(`Error-Path: ${path}, \nMessage: ${message}`);
         err[`${path}Error`] = message;
       });
 
       // Set state
       this.errors = err;
     }
-  };
-
-  handleRegisterUser = () => {
-    this.props.history.push({
-      pathname: '/register',
-    });
   };
 
   onChange = e => {
@@ -81,6 +73,8 @@ class Login extends React.Component {
 
   render() {
     const {
+      firstName,
+      lastName,
       email,
       password,
       errors: { emailError, passwordError },
@@ -93,6 +87,22 @@ class Login extends React.Component {
           <Card style={style.card}>
             <CardText>
               <h1 className="title">Login</h1>
+              <TextField
+                inputStyle={style.inputStyle}
+                name="firstName"
+                value={firstName}
+                onChange={this.onChange}
+                hintText="Enter First Name"
+                floatingLabelText="First Name"
+              />
+              <TextField
+                inputStyle={style.inputStyle}
+                name="lastName"
+                value={lastName}
+                onChange={this.onChange}
+                hintText="Enter Last Name"
+                floatingLabelText="Last Name"
+              />
               <TextField
                 inputStyle={style.inputStyle}
                 name="email"
@@ -114,12 +124,11 @@ class Login extends React.Component {
               />
             </CardText>
             <CardActions>
-              <RaisedButton style={{ margin: 10 }} primary label="Login" onClick={this.onSubmit} />
               <RaisedButton
                 style={{ margin: 10 }}
                 primary
                 label="Register"
-                onClick={this.handleRegisterUser}
+                onClick={this.onSubmit}
               />
             </CardActions>
           </Card>
@@ -129,4 +138,4 @@ class Login extends React.Component {
   }
 }
 
-export default graphql(loginMutation)(observer(Login));
+export default graphql(registerMutation)(observer(Register));

@@ -50,6 +50,11 @@ class Home extends Component {
     this.addModalOpen = !this.addModalOpen;
   };
 
+  handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+  };
+
   render() {
     const { editModalOpen, addModalOpen } = this;
 
@@ -61,16 +66,19 @@ class Home extends Component {
     return (
       <div>
         <h1 className="title">My Contacts</h1>
+        <h3 className="subtitle">{`Welcome ${this.props.location.state.userName}`}</h3>
         <h3 className="subtitle">
-          {`Welcome ${this.props.location.state.userName}`}
+          <a href="/" onClick={this.handleLogout}>
+            Logout
+          </a>
         </h3>
         {!this.props.data.loading
           ? this.props.data.getAllContacts.map(contact => (
-              <Contact
-                key={contact.id}
-                contact={contact}
-                handleClick={this.handleClick.bind(this, contact)}
-              />
+            <Contact
+              key={contact.id}
+              contact={contact}
+              handleClick={this.handleClick.bind(this, contact)}
+            />
             ))
           : null}
         <EditContact
@@ -78,10 +86,7 @@ class Home extends Component {
           modalOpen={editModalOpen}
           handleModal={this.handleEditModal}
         />
-        <AddContact
-          modalOpen={addModalOpen}
-          handleModal={this.handleFABClick}
-        />
+        <AddContact modalOpen={addModalOpen} handleModal={this.handleFABClick} />
         <FloatingActionButton
           style={style.fab}
           className="add-contact-btn"

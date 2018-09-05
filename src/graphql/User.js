@@ -14,3 +14,15 @@ export const loginMutation = gql`
     }
   }
 `;
+
+export const registerMutation = gql`
+  mutation($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    registerUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+      ok
+      errors {
+        path
+        message
+      }
+    }
+  }
+`;
